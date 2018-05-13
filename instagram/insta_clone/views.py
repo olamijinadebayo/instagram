@@ -13,3 +13,17 @@ def explore(request):
     images = Image.get_images()
 
     return render(request, 'base.html', {"images": images})
+
+
+def profile(request):
+    test = 'Profile route Working'
+    current_user = request.user
+    images = Image.objects.filter(poster=request.user)
+    profiles = Profile.objects.filter(user=request.user)
+    content = {
+        "test": test,
+        "current_user": current_user,
+        "images": images,
+        "profiles": profiles
+    }
+    return render(request, 'profiles/profile.html', content)

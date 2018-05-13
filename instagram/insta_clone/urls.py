@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     url('^$', views.explore, name='explore'),
-
+    url(r'^accounts/profile/(\d+)', views.profile, name="profile"),
 ]

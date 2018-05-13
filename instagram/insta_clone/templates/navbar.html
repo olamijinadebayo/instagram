@@ -1,63 +1,80 @@
+
+{% load bootstrap3 %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"content="width=device-width, initial-scale=1">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Styles block -->
+    {% block styles %}
+
+        {% bootstrap_css %}
+        <link rel="stylesheet" href="{% static 'css/navbar.css'%}">
+        <script src="https://use.fontawesome.com/80caa23151.js"></script>
+
+    {% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="">Instagram</a>
-    </div>
+    {% if user.is_authenticated %}
 
-    <!-- Adding a search form  -->
-     <div class="col-sm-4 col-md-4 navbar-right">
+        <nav class="navbar navbar-default">
 
-       <form class="navbar-form" role="search" action="">
 
-         <div class="input-group">
-           <input type="text" class="form-control" placeholder="Search " name="">
-           <div class="input-group-btn">
-             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-           </div>
-         </div>
+            <div class="container-fluid">
 
-       </form>
-     </div>
-     <!-- search form end -->
-     <div class="col-sm-6 col-md-6">
-            {% if user.is_authenticated %}
-            <ul>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
-                          <span class="caret"></span>
-                      </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <a href="">Home</a>
-                  </li>
-                  <li>
-                    <a href=""></a>
-                  </li>
-                  <li>
-                    <a href="/accounts/password/change">Change Password</a>
-                  </li>
-                  <li>
-                    <a href="/logout">Logout</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            {% else %}
-            <li>
-              <a class='btn btn-default' href="/accounts/login">Login</a>
-            </li>
+                <div class="container">
 
-            {% endif %}
-          </div>
-  </div>
-</nav>
+                    <div class="navbar-header">
+
+                        <a href="" class="navbar-brand siteIcon">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+
+                        <a href="#" class="navbar-brand siteName">instagram</a>
+
+                    </div>
+
+                    <!-- Adding a search form  -->
+               <div class="col-sm-4 col-md-4 navbar-center">
+
+                 <form class="navbar-form" role="search" action="">
+
+                   <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search " name="article">
+                     <div class="input-group-btn">
+                       <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                     </div>
+                   </div>
+
+                 </form>
+               </div>
+   <!-- search form end -->
+                    <div class="navbar-right">
+
+                        <a href="{% url 'explore'  %}" class="exploreIcon">
+                            <i class="fa fa-compass" aria-hidden="true"></i>
+                        </a>
+
+                        <a href="/logout" class="signOut">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                        </a>
+
+                        <a href="{% url 'profile'%}" class="userIcon">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+
+    {% endif %}
+
+
 </body>
-</html>

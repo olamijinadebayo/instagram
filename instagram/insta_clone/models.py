@@ -20,7 +20,7 @@ class Image(models.Model):
         return self.image_name
 
     @classmethod
-    def get_images(cls, image_id):
+    def get_images(cls):
         images = cls.objects.all()
         return images
 

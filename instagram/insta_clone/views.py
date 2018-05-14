@@ -30,19 +30,20 @@ def home(request):
     return render(request, 'index.html', context)
 
 
-# @login_required(login_url='/accounts/login/')
-# def profile(request):
-#     test = 'Profile route Working'
-#     current_user = request.user
-#     images = Image.objects.filter(poster=request.user)
-#     profiles = Profile.objects.filter(user=request.user)
-#     content = {
-#         "test": test,
-#         "current_user": current_user,
-#         "images": images,
-#         "profiles": profiles
-#     }
-#     return render(request, 'profiles/profile.html', content)
+@login_required(login_url='/accounts/login/')
+def profile(request, profile_id):
+    test = 'testing microphone'
+    current_user = request.user
+    images = Image.objects.filter(poster=request.user)
+    profiles = Profile.objects.filter(user=request.user)
+    content = {
+        "test": test,
+        "current_user": current_user,
+        "images": images,
+        "profiles": profiles
+    }
+    return render(request, 'profiles/profile.html', content)
+
 
 def signup(request):
     if request.method == 'POST':

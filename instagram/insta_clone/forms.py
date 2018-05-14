@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Profile, Image, User
+from .models import Profile, Image, User
 
 
 class WelcomeEmailForm(forms.Form):
@@ -10,8 +10,8 @@ class WelcomeEmailForm(forms.Form):
 class NewImagePost(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['image', 'image_name', 'image_caption']
-        exclude = ['profile, user, Likes, comments, tags']
+        fields = ['post_image', 'image_name', 'image_caption']
+        #exclude = ['profile, user, Likes, comments, tags']
 
 
 class EditUserForm(forms.ModelForm):

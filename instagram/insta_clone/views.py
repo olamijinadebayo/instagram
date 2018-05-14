@@ -1,10 +1,10 @@
 import datetime as dt
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Image, Profile
+from .models import Image, Profile, WelcomeEmailRecipients
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
-from django.contrib.auth.decorators import login_required
+from . forms import WelcomeEmailForm
 
 # Create your views here.
 

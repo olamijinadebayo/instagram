@@ -5,6 +5,11 @@ from tinymce.models import HTMLField
 # Create your models here.
 
 
+class WelcomeEmailRecipients(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField()
+
+
 class Profile(models.Model):
     '''
     creating a profile model for each user

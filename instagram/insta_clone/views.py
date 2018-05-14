@@ -2,7 +2,7 @@ import datetime as dt
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Image, Profile
-
+from django.contrib.auth.decorators import login_required
 #from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 
@@ -15,6 +15,7 @@ def explore(request):
     return render(request, 'base.html', {"images": images})
 
 
+@login_required(login_url='/accounts/login/')
 def profile(request):
     test = 'Profile route Working'
     current_user = request.user

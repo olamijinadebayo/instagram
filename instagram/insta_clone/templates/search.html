@@ -24,13 +24,14 @@
 
   {% if found_profiles %}
     {% for profile in found_profiles %}
-    <div class="alert alert-info" role="alert">
+    <div class="" role="">
     <div class="row">
       <div class="col-md-4">
         <img src="{{profile.avatar.url}}" class="img-responsive" alt="profile image">
       </div>
       <div class="col-md-8 ">
           <h1><a href="{%url 'profile' profile.id %}">{{profile.first_name}}</a></h1>
+          <h3>Bio : {{profile.bio}}</h3>
       </div>
 
     </div>

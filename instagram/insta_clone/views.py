@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Image, Profile, WelcomeEmailRecipients
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
-from . forms import WelcomeEmailForm, SignUpForm, PostImageForm
+from . forms import WelcomeEmailForm, SignUpForm, PostImageForm, CommentForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -82,3 +82,20 @@ def search_profiles(request):
     search_term = request.GET.get("profile")
     found_profiles = Profile.get_searched_profile(search_term)
     return render(request, 'search.html', {"found_profiles": found_profiles})
+
+
+def comment(request, image_id):
+    current_user = request.user
+    current_image = Image.objects.get(id=image_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment_form = form.save(commit=False)
+            comment_form.user = current_user
+            comment_form.image = current_image
+            comment_form.save()
+
+    else:
+        form = CommentForm()
+    return render(request, 'comment.html', {"form": form, "current_image": current_image})

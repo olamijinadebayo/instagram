@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block styles %}
+{{ block.super }}
+{% bootstrap_css %}
+<link rel="stylesheet" href="">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+    {% if found_profiles %}
+      <h2>Found {{ found_profiles|length }} result of the user searched </h2>
+    {% else %}
+      <h2> Found 0 users </h2>
+    {% endif %}
+
+  </div>
+</div>
+<div class="container">
+
+
+  {% if found_profiles %}
+    {% for profile in found_profiles %}
+    <div class="alert alert-info" role="alert">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="{{profile.avatar.url}}" class="img-responsive" alt="profile image">
+      </div>
+      <div class="col-md-8 ">
+          <h1><a href="{%url 'profile' profile.id %}">{{profile.first_name}}</a></h1>
+      </div>
+
+    </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+
+
+
+
+{% endblock %}

@@ -31,7 +31,7 @@ class Profile(models.Model):
 
     @classmethod
     def get_searched_profile(cls, search_term):
-        profiles = cls.objects.filter(name__icontains=search_term)
+        profiles = cls.objects.filter(first_name__icontains=search_term)
         return profiles
 
     def save_profile(self):

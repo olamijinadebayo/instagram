@@ -81,4 +81,4 @@ def new_post(request):
 def search_profiles(request):
     search_term = request.GET.get("profile")
     found_profiles = Profile.get_searched_profile(search_term)
-    return render(request 'search.html', {"found_profiles": found_profiles})
+    return render(request, 'search.html', {"found_profiles": found_profiles})

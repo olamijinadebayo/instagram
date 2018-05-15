@@ -29,6 +29,12 @@ class Profile(models.Model):
         profile = Profile.objects.all()
         return profile
 
+    def save_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

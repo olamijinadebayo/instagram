@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Image, User
+from .models import Profile, Image
+from django.contrib.auth.models import User
 
 
 class SignUpForm(UserCreationForm):
@@ -21,10 +22,10 @@ class WelcomeEmailForm(forms.Form):
     email = forms.EmailField(label='Email')
 
 
-class NewImagePost(forms.ModelForm):
+class PostImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['post_image', 'image_name', 'image_caption']
+        fields = ['image_name', 'image_caption', 'post_image']
 
 
 class EditUserForm(forms.ModelForm):

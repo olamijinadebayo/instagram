@@ -1,37 +1,14 @@
 {%extends 'base.html'%}
 <!-- block content -->
 {% block content %}
- {% if user.is_authenticated %}
- <div class="container">
+    {% if user.is_authenticated %}
+    <h3><a href="{% url 'new_post' %}">click here to post new images</a></h3>
 
-  <div class="">
-    <h1 style="font-family: 'Cookie', cursive;"><strong>Instagram</strong></h1>
-    <br>
+    {% else %}
+      <div class=" text-center">
+        <a type="button" class="btn btn-primary" href="/accounts/login">Sign in</a>
+      </div>
+      <h3><a href="/accounts/register">click here to register</a></h3>
 
-    <!-- <h2 class="text-muted">Your Feed</h2> -->
-    <br>
-  
-  </div>
-
-</div>
-
-
-
-<!-- end footer -->
-{% else %}
-<div class="container ">
-
-  <div class=" text-center">
-    <h1><strong>Instagrame</strong></h1>
-
-    <a type="button" class="btn btn-primary" href="/accounts/login">Sign in</a>
-  </div>
-
-</div>
-
-<div class="container">
-  <h3><a href="/accounts/register">click here to register</a></h3>
-
-</div>
-
-{% endif %} {% endblock %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %}
+<!-- block content -->
+{% block content %}
+    {% if user.is_authenticated %}
+          <h2>Post Images</h2>
+          <form method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+              {% bootstrap_form form %}
+            <button type="submit" name="button">post</button>
+          </form>
+
+    {% else %}
+      <div class=" text-center">
+        <a type="button" class="btn btn-primary" href="/accounts/login">Sign in</a>
+      </div>
+      <h3><a href="/accounts/register">click here to register</a></h3>
+
+    {% endif %}
+{% endblock %}

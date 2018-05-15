@@ -50,10 +50,15 @@ class Image(models.Model):
     image_name = models.CharField(max_length=60)
     post_image = models.ImageField(upload_to='images/', blank=True)
     image_caption = models.TextField()
-    comments = models.CharField(max_length=50)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     # profile = models.ForeignKey(Profile, null=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True)
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
 
     def __str__(self):
         return self.image_name

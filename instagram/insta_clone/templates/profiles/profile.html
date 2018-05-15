@@ -1,2 +1,28 @@
+{% extends 'base.html'%}
+{% block content %}
 
-{{test}}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      {% if current_profile.avatar%}
+        <img src="{{ current_profile.avatar.url }}" class="img-responsive img-circle profile" alt="avatar">
+      {% endif %}
+
+    </div>
+    <div class="col-md-8">
+      <h5>
+         Profile name:{{current_profile.first_name}}
+      </h5>
+      <h5> Bio : {{ current_profile.bio}}</h5>
+      <a type="button" class="btn btn-primary btn-lg" href="">Edit your profile</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md -4">
+
+    </div>
+  </div>
+</div>
+{% endblock %}

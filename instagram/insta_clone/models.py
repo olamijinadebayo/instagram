@@ -16,7 +16,7 @@ class Profile(models.Model):
     creating a profile model for each user
     '''
     avatar = models.ImageField(upload_to='avatar/', blank=True)
-    bio = HTMLField()
+    bio = models.TextField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
@@ -36,9 +36,9 @@ class Image(models.Model):
     creating a class for the image model
     '''
     image_name = models.CharField(max_length=60)
-    image_caption = HTMLField()
+    image_caption = models.TextField()
     comments = models.CharField(max_length=50)
-    likes = models.PositiveIntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post_image = models.ImageField(upload_to='posts/', null=True)
     poster = models.ForeignKey(User, default=True, on_delete=models.CASCADE)
@@ -50,3 +50,12 @@ class Image(models.Model):
     def get_images(cls):
         images = cls.objects.all()
         return images
+
+
+class Comment(models.Model):
+    '''
+    creating a class to initialize comments
+    '''
+    comment = models.CharField(max_length=50)
+    image = models.ForeignKey(Image, null=True)
+    user = models.ForeignKey(User, null=True)

@@ -6,6 +6,7 @@ from . forms import WelcomeEmailForm, SignUpForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -32,17 +33,10 @@ def home(request):
 
 @login_required(login_url='/accounts/login/')
 def profile(request, profile_id):
-    test = 'testing microphone'
-    current_user = request.user
-    images = Image.objects.filter(poster=request.user)
-    profiles = Profile.objects.filter(user=request.user)
-    content = {
-        "test": test,
-        "current_user": current_user,
-        "images": images,
-        "profiles": profiles
-    }
-    return render(request, 'profiles/profile.html', content)
+    current_profile = Profile.objects.get(id=profile_id)
+    images = Image.objects.filter(profile=current_profile)
+
+    return render(request, 'profiles/profile.html', {"current_profile": current_profile, "images": images})
 
 
 def signup(request):

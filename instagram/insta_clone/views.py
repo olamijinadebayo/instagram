@@ -34,14 +34,6 @@ def home(request):
                "profiles": profiles, "specific_profile": specific_profile}
     return render(request, 'index.html', context)
 
-# @login_required(login_url='/accounts/login')
-# def home(request):
-#     current_user=request.user
-#     profile_info=Profile.objects.all()
-#     profile=Profile.objects.get(user=current_user)
-#     images=Image.objects.all()
-#     return render(request,'main/home.html',{profile_info":profile_info,"images":images})
-
 
 @login_required(login_url='/accounts/login/')
 def profile(request, profile_id):
@@ -72,7 +64,7 @@ def signup(request):
 
 @login_required(login_url='/accounts/login')
 def new_post(request):
-    profiles = Profile.get_profile()
+    profiles = Profile.get_all_profiles()
     for profile in profiles:
         form = PostImageForm(request.POST, request.FILES)
         if request.method == 'POST':
@@ -84,4 +76,9 @@ def new_post(request):
     else:
         form = PostImageForm()
     return render(request, 'new_post.html', {"form": form})
-    # return render(request, 'new_post.html', {"form": form})
+
+
+def search_profiles(request):
+    search_term = request.GET.get("profile")
+    found_profiles = Profile.get_searched_profile(search_term)
+    return render(request 'search.html', {"found_profiles": found_profiles})

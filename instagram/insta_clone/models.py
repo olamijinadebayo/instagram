@@ -25,9 +25,14 @@ class Profile(models.Model):
         return self.first_name
 
     @classmethod
-    def get_profile(cls):
+    def get_all_profiles(cls):
         profile = Profile.objects.all()
         return profile
+
+    @classmethod
+    def get_searched_profile(cls, search_term):
+        profiles = cls.objects.filter(name__icontains=search_term)
+        return profiles
 
     def save_profile(self):
         self.save()

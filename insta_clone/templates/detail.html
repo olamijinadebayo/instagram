@@ -1,0 +1,18 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %}
+{{block.super}}
+{% block content %}
+<div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{{current_image.post_image.url}}" alt="">
+
+        </div>
+        <div class="col-md-6">
+          {{current_image.id}}
+            <a href="{% url 'comment' current_image.id %}">Add comments</a>
+        </div>
+      </div>
+
+</div>
+{%endblock%}

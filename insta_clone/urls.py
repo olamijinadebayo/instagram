@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^new_post/', views.new_post, name='new_post'),
     url(r'^search/', views.search_profiles, name='search'),
     url(r'^comment/(\d+)', views.comment, name='comment'),
+    url(r'^detail/(\d+)', views.detail, name='detail'),
 ]

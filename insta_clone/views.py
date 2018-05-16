@@ -1,5 +1,5 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Image, Profile, WelcomeEmailRecipients
+from .models import Image, Profile, WelcomeEmailRecipients, Comment
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
 from . forms import WelcomeEmailForm, SignUpForm, PostImageForm, CommentForm
@@ -65,14 +65,15 @@ def signup(request):
 @login_required(login_url='/accounts/login')
 def new_post(request):
     profiles = Profile.get_all_profiles()
-    for profile in profiles:
-        form = PostImageForm(request.POST, request.FILES)
-        if request.method == 'POST':
-            if form.is_valid():
-                image = form.save(commit=False)
-                image.profile = profile
-                image.save()
-                return redirect(profile, profile.id)
+    profile1 = Profile.objects.get(id=request.user.id)
+    # for profile in profiles:
+    form = PostImageForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.profile = profile1
+            image.save()
+            return redirect(home)
     else:
         form = PostImageForm()
     return render(request, 'new_post.html', {"form": form})
@@ -99,3 +100,9 @@ def comment(request, image_id):
     else:
         form = CommentForm()
     return render(request, 'comment.html', {"form": form, "current_image": current_image})
+
+
+def detail(request, image_id):
+    current_image = Image.objects.get(id=image_id)
+    comment_details = Comment.objects.filter(image=current_image)
+    return render(request, 'detail.html', {"current_image": current_image, "comment_details": comment_details})

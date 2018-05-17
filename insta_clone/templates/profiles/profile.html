@@ -13,9 +13,24 @@
     <div class="col-md-8">
       <h5>
          Profile name:{{current_profile.first_name}}
+         <p>following <small>{{ current_profile.get_following.count}}</small> </p>
+         <p>followers <small>{{current_profile.user.followed_by.all.count}}</small></p>
       </h5>
       <h5> Bio : {{ current_profile.bio}}</h5>
       <a type="button" class="btn btn-primary btn-lg" href="">Edit your profile</a>
+        <h2>Following</h2>
+        {% for user in current_profile.get_following %}
+        <p>  <a href="{% url 'profile' user.id %}">{{ user.first_name}}</a></p>
+        {% empty %}
+        <h3>you are not following any user</h3>
+        {% endfor %}
+
+        <h2>Followed by</h2>
+        {% for user in current_profile.user.followed_by.all %}
+        <p><a href="{% url 'profile' user.id %}">{{ user.first_name}}</a></p>
+        {% empty %}
+        <h3>Not followed by any user</h3>
+        {% endfor %}
     </div>
   </div>
 

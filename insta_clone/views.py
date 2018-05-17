@@ -105,4 +105,7 @@ def comment(request, image_id):
 def detail(request, image_id):
     current_image = Image.objects.get(id=image_id)
     comment_details = Comment.objects.filter(image=current_image)
-    return render(request, 'detail.html', {"current_image": current_image, "comment_details": comment_details})
+    current_profile = Profile.objects.get(id=profile_id)
+
+    return render(request, 'detail.html', {"current_image": current_image, "comment_details": comment_details,
+                                           "followers": followers, "current_profile": current_profile})

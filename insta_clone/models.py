@@ -11,15 +11,37 @@ class WelcomeEmailRecipients(models.Model):
     email = models.EmailField()
 
 
+class ProfileManager(models.Manager):
+    use_for_related_fields = True
+
+    def all(self):
+        qs = self.get_queryset().all()
+        # print(dir(self))
+        # print(self.instance)
+        try:
+            if self.instance:
+                qs = qs.exclude(user=self.instance)
+        except:
+            pass
+        return qs
+
+
 class Profile(models.Model):
     '''
     creating a profile model for each user
     '''
     avatar = models.ImageField(upload_to='avatar/', blank=True)
     bio = models.TextField()
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
+    following = models.ManyToManyField(User, blank=True, related_name='followed_by')
+
+    objects = ProfileManager()
+
+    def get_following(self):
+        users = self.following.all()
+        return users.exclude(username=self.user.username)
 
     def __str__(self):
         return self.first_name

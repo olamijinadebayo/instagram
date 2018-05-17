@@ -5,9 +5,10 @@ from .email import send_welcome_email
 from . forms import WelcomeEmailForm, SignUpForm, PostImageForm, CommentForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.views import View
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -109,3 +110,15 @@ def detail(request, image_id):
 
     return render(request, 'detail.html', {"current_image": current_image, "comment_details": comment_details,
                                            "followers": followers, "current_profile": current_profile})
+
+
+def like_post(request, image_id):
+    post = Image.objects.get(id=image_id)
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    return redirect(details, post.id)

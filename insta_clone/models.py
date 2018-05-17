@@ -105,3 +105,6 @@ class Comment(models.Model):
     comment = models.CharField(max_length=50)
     image = models.ForeignKey(Image, null=True)
     user = models.ForeignKey(User, null=True)
+
+    def __str__(self):
+        return self.comment

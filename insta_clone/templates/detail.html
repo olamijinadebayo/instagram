@@ -6,23 +6,29 @@
       <div class="row">
         <div class="col-md-6">
           <img src="{{current_image.post_image.url}}" class="img-responsive"alt="">
-
-          <div class="">
-            <h4>{{current_image.total_likes}} Likes</h4>
-               {%if is_liked %}
-                <a href="{%url 'like_post' image_details.id%}"><i class="fa fa-heart" ></i></a><!--/button-->
-               {%else %}
-               <a href="{%url 'like_post' image_details.id%}"><i class="fa fa-heart-o" ></i></a><!--/button-->
-              {% endif %}
-        </div>
-
-</div>
- </div>
-
+            <div class="likes">
+              <h4>{{current_image.total_likes}} Likes</h4>
+                 {%if is_liked %}
+                  <a href="{%url 'like_post' image_details.id%}"><i class="fa fa-heart" ></i></a><!--/button-->
+                 {%else %}
+                 <a href="{%url 'like_post' image_details.id%}"><i class="fa fa-heart-o" ></i></a><!--/button-->
+                {% endif %}
+            </div>
         </div>
         <div class="col-md-6">
             <a href="{% url 'comment' current_image.id %}">Add comments</a>
+            <div class="comments">
+              {%for comment in comment_details %}
+                <div class="">
+                  <p class="text-center">{{comment.comment}}</p>
+                </div>
+              {% endfor %}
+            </div>
         </div>
+      </div>
+
+</div>
+
       </div>
 
 </div>

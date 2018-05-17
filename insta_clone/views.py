@@ -106,10 +106,16 @@ def comment(request, image_id):
 def detail(request, image_id):
     current_image = Image.objects.get(id=image_id)
     comment_details = Comment.objects.filter(image=current_image)
-    current_profile = Profile.objects.get(id=profile_id)
+    is_liked = False
+    if current_image.likes.filter(id=request.user.id).exists():
+        is_liked = True
 
-    return render(request, 'detail.html', {"current_image": current_image, "comment_details": comment_details,
-                                           "followers": followers, "current_profile": current_profile})
+    try:
+        image_details = Image.objects.get(id=image_id)
+    except DoesNotExsist:
+        raise Http404()
+
+    return render(request, 'detail.html', {"image_details": image_details, "current_image": current_image, "comment_details": comment_details})
 
 
 def like_post(request, image_id):
@@ -121,4 +127,4 @@ def like_post(request, image_id):
     else:
         post.likes.add(request.user)
         is_liked = True
-    return redirect(details, post.id)
+    return redirect(detail, post.id)

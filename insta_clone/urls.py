@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from . import views
 from . import views as core_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url('^$', views.home, name='home'),
@@ -10,4 +12,7 @@ urlpatterns = [
     url(r'^search/', views.search_profiles, name='search'),
     url(r'^comment/(\d+)', views.comment, name='comment'),
     url(r'^detail/(\d+)', views.detail, name='detail'),
+    url(r'^likes/(\d+)', views.like_post, name="like_post"),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -94,6 +94,9 @@ class Image(models.Model):
         images = cls.objects.all()
         return images
 
+    def total_likes(self):
+        return self.likes.count()
+
 
 class Comment(models.Model):
     '''

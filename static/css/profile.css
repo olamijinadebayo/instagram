@@ -1,4 +1,47 @@
-.profile{
-  width: 200px !important;
-  height: 200px !important;
+.border-bottom{
+  border-bottom: 1px solid lightgray;
+}
+.wrapper {
+  width: 73%;
+  margin: 0 auto;
+}
+.post_width{
+  width: 75% !important;
+}
+.pd-5{
+  padding: 5px;
+}
+.profile {
+  width: 150px !important;
+  height:150px !important;
+}
+
+.edit {
+  border: 1px solid lightgray;
+  color: black;
+  padding: 2px 17px;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons p {
+  padding: 10px;
+}
+
+.bio {
+  display: flex;
+}
+
+.bio p {
+  padding: 5px;
+}
+
+.bold {
+  font-weight: bold;
+}
+.fol{
+  color:white;
 }

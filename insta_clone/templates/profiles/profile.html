@@ -1,54 +1,80 @@
 {% extends 'base.html'%}
+{% load static %}
+{% block styles %}
+  {{block.super}}
+  <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+{% endblock %}
 {% block content %}
-
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      {% if current_profile.avatar%}
-        <img src="{{ current_profile.avatar.url }}" class="img-responsive img-circle profile" alt="avatar">
-      {% endif %}
-
-    </div>
-    <div class="col-md-8">
-      <div>
-          {{current_profile.user.username}}
-            {% if current_profile.user.id == request.user.id%}
-              <a type="button" class="edit" href="">edit profile</a>
-            {% endif%}
-         <p>following <small>{{ current_profile.get_following.count}}</small> </p>
-         <p>followers <small>{{current_profile.user.followed_by.all.count}}</small></p>
+<div class="container-fluid ">
+  <div class="wrapper border-bottom">
+    <div class="row">
+      <div class="col-md-4">
+        {% if current_profile.avatar%}
+          <img src="{{ current_profile.avatar.url }}" class="img-responsive img-circle profile" alt="avatar">
+        {% endif %}
       </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-6 pd-5"><p class="bold">{{current_profile.user.username}}</p></div>
+              <div class="col-md-6">
+                <p>
+                  {% if not current_profile.user.id == request.user.id%}
+                    {% if is_follow %}
+                  <a href="{%url 'follow' current_profile.id %}"><button type="submit" class="btn btn-primary fol">Unfollow</button></a>
+                    {% else %}
+                  <a href="{%url 'follow' current_profile.id %}"><button type="submit" class="btn btn-primary fol">follow</button></a>
+                   {% endif %}
+                  {%endif%}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">  {% if current_profile.user.id == request.user.id%}
+              <a type="button" class="edit" href="">Edit Profile</a>
+            {% endif%}
+          </div>
+        </div>
+        <div class="row buttons">
+          <p>5<small>posts</small></p>
+          <p>{{ current_profile.get_following.count}}<small>following</small></p>
+          <p>{{current_profile.user.followed_by.all.count}}<small>followers</small></p>
+        </div>
+        <div class="bio">
+          <p><span class="bold">{{ current_profile.user.first_name }} {{ current_profile.user.last_name}}</span></p>
+          <p>{{ current_profile.bio}}</p>
+        </div>
+        <div class="">
+          <p>Following</p>
+          {% for user in current_profile.get_following %}
+          <p><a href="{% url 'profile' user.id %}">{{user.first_name}}</a></p>
+          {% empty %}
+          <p>you are not following any user</p>
+          {% endfor %}
 
-      <h5> Bio : {{ current_profile.bio}}</h5>
-
-        <h2>Following</h2>
-        {% for user in current_profile.get_following %}
-        <p>  <a href="{% url 'profile' user.id %}">{{ user.first_name}}</a></p>
-        {% empty %}
-        <h3>you are not following any user</h3>
-        {% endfor %}
-
-        <h2>Followed by</h2>
-        {% for user in current_profile.user.followed_by.all %}
-        <p><a href="{% url 'profile' user.id %}">{{ user.first_name}}</a></p>
-        {% empty %}
-        <h3>Not followed by any user</h3>
-        {% endfor %}
+          <p>Followers</p>
+          {% for user in current_profile.user.followed_by.all %}
+          <p><a href="{% url 'profile' user.id %}">{{ user.user.first_name}}</a></p>
+          {% empty %}
+          <p>Not followed by any user</p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
+  <div class="container post_width">
+    <h4 class="text-center">Posts</h4>
 
-  <div class="row">
-    <div class="col-md -4">
-      {% if not current_profile.user.id == request.user.id%}
-        {% if is_follow %}
-        <button type="submit"name=""class=""><a href="{%url 'follow' current_profile.id %}">Unfollow</a></button>
-        {% else %}
-        <button type="submit"name=""class=""><a href="{%url 'follow' current_profile.id %}">Follow</a></button>
-       {% endif %}
-      {%endif%}
+    <div class="row">
+        {% for image in images %}
+      <div class="col-md-4 pd-5">
+          <img class="img-responsive" src="{{image.post_image.url}}" alt="">
+      </div>
+      {%endfor%}
     </div>
-    </div>
+
   </div>
 </div>
+
 {% endblock %}

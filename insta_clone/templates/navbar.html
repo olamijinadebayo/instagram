@@ -6,22 +6,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"content="width=device-width, initial-scale=1">
-
     <!-- Styles block -->
     {% block styles %}
-
         {% bootstrap_css %}
         <link rel="stylesheet" href="{% static 'css/navbar.css'%}">
-
     {% endblock %}
 </head>
 <body>
     {% if user.is_authenticated %}
 
-        <nav class="navbar navbar-default">
+        <nav class="navbar">
 
 
-            <div class="container-fluid">
+            <div class="container">
 
                 <div class="container">
 
@@ -46,7 +43,7 @@
    <!-- search form end -->
                     <div class="navbar-right">
 
-                        <a href="" class="">
+                        <a href="{%url 'explore'%}" class="">
                           <img src="{% static "images/compass.png" %}" alt="">
                         </a>
 

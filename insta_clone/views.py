@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 
 
 @login_required(login_url='/accounts/login/')
-def home(request):
+def explore(request):
     images = Image.objects.all()
     print(images)
     profiles = Profile.objects.all()
@@ -33,7 +33,7 @@ def home(request):
         form = WelcomeEmailForm()
     context = {"images": images, "current_user": current_user, "form": form,
                "profiles": profiles, "specific_profile": specific_profile}
-    return render(request, 'index.html', context)
+    return render(request, 'explore.html', context)
 
 
 @login_required(login_url='/accounts/login/')

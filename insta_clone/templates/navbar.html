@@ -23,9 +23,9 @@
                 <div class="container">
 
                     <div class="navbar-header">
-                        <a href="{%url 'home'%}" class=""><img src="{% static "images/instagram.png" %}" alt=""></a>
+                        <a href="{%url 'home'%}" ><img class="logo" src="{% static "images/instagram.png" %}" alt=""></a>
 
-                        <a href="{%url 'home'%}" class="">instagram</a>
+                        <a href="{%url 'home'%}" class="logo2">Instagram</a>
 
                     </div>
 
@@ -41,19 +41,24 @@
                  </form>
                </div>
    <!-- search form end -->
+
+                
                     <div class="navbar-right">
 
                         <a href="{%url 'explore'%}" class="">
                           <img src="{% static "images/compass.png" %}" alt="">
                         </a>
 
-                        <a href="/logout" class="">
+                        <a href="#" class="">
                           <img src="{% static "images/heart.png"%}" alt="">
                         </a>
-
+                        <a href="{% url 'new_post' %}">
+                          <i class="fa fa-cloud-upload sign" aria-hidden="true"></i>
+                        </a>
                         <a href="{%url 'profile' user.id%}" class="userIcon">
                           <img src="{% static "images/user.png" %}" alt="">
                         </a>
+                        <a href="/logout"><i class="fa fa-sign-out sign " aria-hidden="true"></i></a>
                     </div>
 
                 </div>

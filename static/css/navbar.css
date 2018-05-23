@@ -1,7 +1,22 @@
-.search{
-  margin-left:10%;
+.search {
+  margin-left: 10%;
 }
-nav{
-  border-bottom: 1px solid lightgray !important;
 
+nav {
+  border-bottom: 1px solid lightgray !important;
+}
+
+.logo {
+  border-right: 1px solid black;
+}
+
+.logo2 {
+  font-size: 200%;
+  color: black;
+  text-decoration:none;
+}
+
+.sign {
+  color: black;
+  font-size: x-large;
 }

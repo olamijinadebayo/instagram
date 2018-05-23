@@ -1,13 +1,16 @@
 {%extends "registration/base.html"%}
 {% load static %}
 {% load bootstrap3 %}
-
+{% block styles %}
+{{block.super}}
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row">
     <!-- Empty div -->
     <div class="col-md-6">
-      <div class=" phones ">
+      <div class="phones">
         <img class=" phone img-responsive"src="{% static "images/insta.png" %}" alt="">
       </div>
     </div>
@@ -16,28 +19,23 @@
         <p> Password or Username is incorrect </p>
       {% endif %}
       <div class="panel panel-default">
-
         <div class="panel-heading">
           <h3 class="text-center">Sign In</h3>
         </div>
         <div class="panel-body">
-
           <form  action="/accounts/login/" method="post">
             {% csrf_token %}
             {% bootstrap_form form%}
-
             <div class="form-group">
               <input type="submit" class="btn btn-primary btn-sm" value="Login">
             </div>
-
             <input type="hidden" name="next" value="{{next}}">
-
           </form>
-
         </div>
-
+        <div class="panel-body">
+          <a href="/signup">Don't have an account? SignUp here.</a>
+        </div>
       </div>
-
     </div>
     <div class="col-md-2">
 

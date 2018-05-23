@@ -13,6 +13,16 @@ from django.contrib.auth.models import User
 
 
 @login_required(login_url='/accounts/login/')
+def home(request):
+    # Only return posts from users that are being followed
+    my_followers = request.user.profile.get_following()
+    print(my_followers)
+    posts = Image.objects.filter(user__in=my_followers)
+
+    return render(request, 'index.html', {"posts": posts, "my_followers": my_followers})
+
+
+@login_required(login_url='/accounts/login/')
 def explore(request):
     images = Image.objects.all()
     print(images)

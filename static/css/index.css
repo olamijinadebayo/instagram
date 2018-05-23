@@ -1,0 +1,9 @@
+.rounded-circle{
+  height:30px !important;
+  width: 30px !important;
+}
+.card-header{
+  display: flex;
+  justify-content: flex-start;
+  background: white;
+}

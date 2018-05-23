@@ -77,7 +77,6 @@ class Image(models.Model):
     post_image = models.ImageField(upload_to='images/', blank=True)
     image_caption = models.TextField()
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
-    #user = models.ForeignKey(User)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True)
 
     def save_image(self):

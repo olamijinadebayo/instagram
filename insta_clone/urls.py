@@ -5,8 +5,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url('^$', views.explore, name='explore'),
-    url(r'^home/$', views.home, name='home'),
+    url('^$', views.index, name='home'),
+    url(r'^explore/$', views.explore, name='explore'),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'^profile/(\d+)/$', views.profile, name='profile'),
     url(r'^new_post/', views.new_post, name='new_post'),

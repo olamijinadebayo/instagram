@@ -41,7 +41,13 @@ def profile(request, profile_id):
     current_profile = Profile.objects.get(id=profile_id)
     images = Image.objects.filter(profile=current_profile)
 
-    return render(request, 'profiles/profile.html', {"current_profile": current_profile, "images": images})
+    follows = Profile.objects.get(id=request.user.id)
+    is_follow = False
+    if follows.following.filter(id=profile_id).exists():
+        is_follow = True
+    following = follows.following.all()
+    followers = follows.user.followed_by.all()
+    return render(request, 'profiles/profile.html', {"current_profile": current_profile, "images": images, "follows": follow, "is_follow": is_follow, "following": following, "followers": followers})
 
 
 def signup(request):
@@ -128,3 +134,17 @@ def like_post(request, image_id):
         post.likes.add(request.user)
         is_liked = True
     return redirect(detail, post.id)
+
+
+def follow(request, user_id):
+    follows = Profile.objects.get(id=request.user.id)
+    user1 = User.objects.get(id=user_id)
+    # user=Profile.objects.get(id=user_id)
+    is_follow = False
+    if follows.following.filter(id=user_id).exists():
+        follows.following.remove(user1)
+        is_follow = False
+    else:
+        follows.following.add(user1)
+        is_follow = True
+    return redirect(profile, user1.id)

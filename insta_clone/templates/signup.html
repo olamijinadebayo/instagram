@@ -1,10 +1,19 @@
 {% extends 'base.html'%}
+{% load static%}
 {% load bootstrap3 %}
+{% block styles %}
+  {{block.super}}
+  <link rel="stylesheet" href="{% static 'css/signup.css'%}">
+{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row">
     <!-- Empty div -->
-    <div class="col-md-4"></div>
+    <div class="col-md-6">
+      <div class=" phones ">
+        <img class=" phone img-responsive"src="{% static "images/insta.png" %}" alt="">
+      </div>
+    </div>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -20,7 +29,7 @@
       </div>
     </div>
     <!-- empty div -->
-    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
   </div>
 </div>
 </div>

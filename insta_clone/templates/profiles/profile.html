@@ -11,13 +11,17 @@
 
     </div>
     <div class="col-md-8">
-      <h5>
-         Profile name:{{current_profile.first_name}}
+      <div>
+          {{current_profile.user.username}}
+            {% if current_profile.user.id == request.user.id%}
+              <a type="button" class="edit" href="">edit profile</a>
+            {% endif%}
          <p>following <small>{{ current_profile.get_following.count}}</small> </p>
          <p>followers <small>{{current_profile.user.followed_by.all.count}}</small></p>
-      </h5>
+      </div>
+
       <h5> Bio : {{ current_profile.bio}}</h5>
-      <a type="button" class="btn btn-primary btn-lg" href="">Edit your profile</a>
+
         <h2>Following</h2>
         {% for user in current_profile.get_following %}
         <p>  <a href="{% url 'profile' user.id %}">{{ user.first_name}}</a></p>
@@ -36,7 +40,14 @@
 
   <div class="row">
     <div class="col-md -4">
-
+      {% if not current_profile.user.id == request.user.id%}
+        {% if is_follow %}
+        <button type="submit"name=""class=""><a href="{%url 'follow' current_profile.id %}">Unfollow</a></button>
+        {% else %}
+        <button type="submit"name=""class=""><a href="{%url 'follow' current_profile.id %}">Follow</a></button>
+       {% endif %}
+      {%endif%}
+    </div>
     </div>
   </div>
 </div>

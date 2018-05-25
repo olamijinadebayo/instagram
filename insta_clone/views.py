@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Image, Profile, WelcomeEmailRecipients, Comment
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
-from . forms import WelcomeEmailForm, SignUpForm, PostImageForm, CommentForm
+from . forms import WelcomeEmailForm, SignUpForm, PostImageForm, CommentForm, NewProfileForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, get_object_or_404
@@ -20,6 +20,21 @@ def index(request):
     posts = Image.objects.all()
 
     return render(request, 'index.html', {"posts": posts, "my_followers": my_followers})
+
+
+def detail(request, image_id):
+    current_image = Image.objects.get(id=image_id)
+    comment_details = Comment.objects.filter(image=current_image)
+    is_liked = False
+    if current_image.likes.filter(id=request.user.id).exists():
+        is_liked = True
+
+    try:
+        image_details = Image.objects.get(id=image_id)
+    except DoesNotExsist:
+        raise Http404()
+
+    return render(request, 'detail.html', {"image_details": image_details, "current_image": current_image, "comment_details": comment_details})
 
 
 @login_required(login_url='/accounts/login/')
@@ -66,8 +81,8 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()  # load the profile instance
-            user.profile.avatar = form.cleaned_data.get('avatar')
-            user.profile.bio = form.cleaned_data.get('bio')
+            # user.profile.avatar = form.cleaned_data.get('avatar')
+            # user.profile.bio = form.cleaned_data.get('bio')
             user.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
@@ -90,7 +105,7 @@ def new_post(request):
             image = form.save(commit=False)
             image.profile = profile1
             image.save()
-            return redirect(home)
+            return redirect(index)
     else:
         form = PostImageForm()
     return render(request, 'new_post.html', {"form": form})
@@ -102,6 +117,7 @@ def search_profiles(request):
     return render(request, 'search.html', {"found_profiles": found_profiles})
 
 
+@login_required(login_url='/accounts/login')
 def comment(request, image_id):
     current_user = request.user
     current_image = Image.objects.get(id=image_id)
@@ -113,27 +129,13 @@ def comment(request, image_id):
             comment_form.user = current_user
             comment_form.image = current_image
             comment_form.save()
-
+        return redirect(detail, current_image.id)
     else:
         form = CommentForm()
     return render(request, 'comment.html', {"form": form, "current_image": current_image})
 
 
-def detail(request, image_id):
-    current_image = Image.objects.get(id=image_id)
-    comment_details = Comment.objects.filter(image=current_image)
-    is_liked = False
-    if current_image.likes.filter(id=request.user.id).exists():
-        is_liked = True
-
-    try:
-        image_details = Image.objects.get(id=image_id)
-    except DoesNotExsist:
-        raise Http404()
-
-    return render(request, 'detail.html', {"image_details": image_details, "current_image": current_image, "comment_details": comment_details})
-
-
+@login_required(login_url='/accounts/login')
 def like_post(request, image_id):
     post = Image.objects.get(id=image_id)
     is_liked = False
@@ -146,6 +148,7 @@ def like_post(request, image_id):
     return redirect(detail, post.id)
 
 
+@login_required(login_url='/accounts/login')
 def follow(request, user_id):
     follows = Profile.objects.get(id=request.user.id)
     user1 = User.objects.get(id=user_id)
@@ -158,3 +161,18 @@ def follow(request, user_id):
         follows.following.add(user1)
         is_follow = True
     return redirect(profile, user1.id)
+
+
+@login_required(login_url='/accounts/login/')
+def edit(request):
+    current_user = request.user
+    profile = Profile.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = NewProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+    else:
+        form = NewProfileForm()
+    return render(request, 'edit_profile.html', {"form": form})

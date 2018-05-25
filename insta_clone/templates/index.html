@@ -15,14 +15,14 @@
       <div class="card text-center">
         <div class="card-header">
           <p class="px-1"><img src="{{post.profile.avatar.url}}" class="img-responsive rounded-circle" alt=""></p>
-          <p class="px-1"><small>{{post.profile.user.username}}</small></p>
+          <p class="px-1"><small class="profile_name">{{post.profile.user.username}}</small></p>
         </div>
         <div class="card-body">
-          <img class="card-img-top" src="{{post.post_image.url}}" class="img-responsive" alt="">
+        <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg"><img class="card-img-top" src="{{post.post_image.url}}" class="img-responsive" alt=""></a>
         </div>
         <div class="card-footer text-muted">
-          <a href="{%url 'like_post' post.id%}"><span><i class="fa fa-heart-o fa-1x mr-2 float-left"></i></span></a>
-         <span><a href="{% url 'comment' post.id %}"><i class="fa fa-comment-o fa-1x float-left"></i></a></span>
+          <a href="{%url 'like_post' post.id%}"><span class="float-left"><i class="fa fa-heart-o fa-1x mr-2  icons">{{post.total_likes}}</i></span></a>
+         <a href="{% url 'comment' post.id %}"><span><i class="fa fa-comment-o fa-1x float-left icons"></i></span></a>
          <span><i class="fa fa-bookmark-o fa-1x float-right mt-1"></i></span>
         </div>
       </div>

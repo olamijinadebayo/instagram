@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^detail/(\d+)', views.detail, name='detail'),
     url(r'^likes/(\d+)', views.like_post, name="like_post"),
     url(r'^follow/(\d+)', views.follow, name="follow"),
+    url(r'^edit/$', views.edit, name="edit"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

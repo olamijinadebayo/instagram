@@ -7,3 +7,11 @@
   justify-content: flex-start;
   background: white;
 }
+.profile_name{
+  font-weight: bolder;
+}
+
+.icons{
+  color: black;
+  padding-right: 15px;
+}

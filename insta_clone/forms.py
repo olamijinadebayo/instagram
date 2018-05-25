@@ -8,13 +8,13 @@ class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
-    avatar = forms.ImageField()
-    bio = forms.CharField(max_length=100)
+    # avatar = forms.ImageField()
+    # bio = forms.CharField(max_length=100)
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email',
-                  'password1', 'password2', 'avatar', 'bio')
+                  'password1', 'password2')
 
 
 class WelcomeEmailForm(forms.Form):
@@ -34,8 +34,7 @@ class CommentForm(forms.ModelForm):
         fields = ['comment']
 
 
-class EditProfile(forms.ModelForm):
+class NewProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['avatar', 'bio']
-        exclude = ['user']
+        exclude = ['user', 'following']

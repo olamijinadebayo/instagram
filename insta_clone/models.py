@@ -96,6 +96,15 @@ class Image(models.Model):
     def total_likes(self):
         return self.likes.count()
 
+    @classmethod
+    def change_caption(cls, image_id, caption):
+        cls.objects.filter(id=image_id).update(image_caption=caption)
+
+    @classmethod
+    def get_image_by_id(cls, image_id):
+        image = cls.objects.get(id=image_id)
+        return image
+
 
 class Comment(models.Model):
     '''
